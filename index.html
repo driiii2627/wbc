@@ -120,10 +120,6 @@
              #searchInput.active { width: 120px; }
         }
         
-        .modal-backdrop {
-            background-color: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-        }
         .category-filter.active {
             background-color: var(--accent-violet);
             color: white;
@@ -169,11 +165,8 @@
                     <div id="langMenu" class="hidden absolute right-0 mt-2 w-48 glass-effect rounded-lg shadow-lg py-1 z-50">
                         <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="pt">Português (BR)</a>
                         <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="en">English (US)</a>
-                        <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="es">Español <i data-lucide="sparkles" class="w-3 h-3 ml-1 opacity-70 text-violet-400"></i></a>
-                        <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="ru">Русский <i data-lucide="sparkles" class="w-3 h-3 ml-1 opacity-70 text-violet-400"></i></a>
-                        <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="de">Deutsch <i data-lucide="sparkles" class="w-3 h-3 ml-1 opacity-70 text-violet-400"></i></a>
-                        <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="fr">Français <i data-lucide="sparkles" class="w-3 h-3 ml-1 opacity-70 text-violet-400"></i></a>
-                        <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="ja">日本語 <i data-lucide="sparkles" class="w-3 h-3 ml-1 opacity-70 text-violet-400"></i></a>
+                        <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="es">Español</a>
+                        <a href="#" class="lang-option flex justify-between items-center px-4 py-2 text-sm text-inherit hover:bg-slate-700 dark:hover:bg-slate-600" data-lang="ru">Русский</a>
                     </div>
                 </div>
                 <button id="darkModeToggle" class="p-2 rounded-full hover:bg-slate-700 dark:hover:bg-slate-300 transition-colors">
@@ -264,41 +257,18 @@
         </footer>
     </div>
     
-    <!-- Botão Flutuante da IA -->
-    <button id="openAiModalBtn" class="glass-effect fixed bottom-6 right-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50 transform hover:scale-110 transition-transform hover:shadow-violet-500/40">
-        <i data-lucide="sparkles" class="w-7 h-7 text-violet-400"></i>
-    </button>
-    
-    <!-- Modal da IA (oculto por padrão) -->
-    <div id="aiModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="modal-backdrop fixed inset-0"></div>
-        <div class="glass-card rounded-2xl p-6 sm:p-8 w-full max-w-lg mx-auto z-10">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold" data-translate-key="ai_modal_title">Sugestões da IA</h2>
-                <button id="closeAiModalBtn" class="p-2 rounded-full hover:bg-slate-700 dark:hover:bg-slate-300 transition-colors">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            <p class="text-muted text-sm mb-4" data-translate-key="ai_modal_subtitle">Diga um tema e a IA irá sugerir alguns jogos para você!</p>
-            <div class="flex flex-col gap-4">
-                <input id="gameIdeaPrompt" type="text" placeholder="Ex: Fantasia sombria, Cyberpunk, etc." data-translate-key="ai_modal_placeholder" class="w-full bg-slate-200 dark:bg-slate-800/50 border border-slate-400 dark:border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                <button id="generateIdeaBtn" class="btn-gradient text-white px-6 py-3 rounded-lg font-bold flex items-center justify-center">
-                    <span id="generateBtnText" data-translate-key="ai_modal_button">Sugerir Jogos</span>
-                    <div id="loader" class="hidden loader w-5 h-5 border-2 border-white border-t-transparent rounded-full ml-2"></div>
-                </button>
-            </div>
-            <div id="ideaResult" class="mt-6 p-4 bg-slate-300 dark:bg-slate-900/50 rounded-lg min-h-[150px] text-sm whitespace-pre-wrap"></div>
-        </div>
-    </div>
-
-    <!-- Tela de Carregamento para Tradução -->
-    <div id="loadingOverlay" class="hidden fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm">
-        <div class="loader w-12 h-12 border-4 border-white border-t-transparent rounded-full"></div>
-        <p class="mt-4 text-white text-lg font-semibold" data-translate-key="loading_text">Traduzindo...</p>
-    </div>
-
     <script>
-        // --- BASE DE DADOS DOS JOGOS ---
+        // ===================================================================================
+        // --- BASE DE DADOS E TRADUÇÕES ---
+        // ===================================================================================
+
+        // Para adicionar um novo jogo, basta copiar um bloco de código (de { até }) e colá-lo no final da lista.
+        // Depois, altere as informações:
+        // - id: um número único para o jogo.
+        // - title: o nome do jogo.
+        // - image: o link da imagem da capa.
+        // - categories: uma lista de categorias (entre aspas e separadas por vírgula).
+        // - featured: 'true' se o jogo deve aparecer nos destaques, 'false' se não.
         const gamesData = [
             {
                 id: 1,
@@ -314,22 +284,22 @@
                 categories: ["Sandbox", "Aventura"],
                 featured: false,
             },
-            {
-                id: 3,
-                title: "Terraria3",
-                image: "https://placehold.co/600x400/9C27B0/FFFFFF?text=Terraria",
-                categories: ["Sandbox", "Aventura"],
-                featured: false,
-            },
+            // --- FIM DA LISTA DE JOGOS ---
+            // Para adicionar mais jogos, adicione mais blocos aqui.
         ];
 
-        // --- DICIONÁRIO DE TRADUÇÕES ---
         const translations = {
             en: {
-                nav_games: "Games", nav_apks: "APKs", nav_announcements: "Announcements", search_placeholder: "Search...", hero_title: "Your Universe of Discoveries", hero_subtitle: "Explore recommendations, find APKs, and dive into new adventures selected by the community.", featured_games_title: "Featured Games", all_games_title: "All Games", genre_action: "Action", genre_adventure: "Adventure", genre_action_rpg: "Action RPG", genre_rpg: "RPG", genre_roguelike: "Roguelike", genre_action_adventure: "Action-Adventure", genre_sandbox: "Sandbox", genre_metroidvania: "Metroidvania", genre_simulation: "Simulation", genre_platform: "Platform", no_results_title: "No games found", no_results_subtitle: "Try searching with other terms.", coming_soon_title: "Coming Soon", coming_soon_subtitle: "We are working on this section!", coming_soon_description: "New features and amazing games are on the way.", "404_button": "Back to Base", footer_copyright: "© 2024 GameShare. All rights reserved.", ai_modal_title: "AI Suggestions", ai_modal_subtitle: "Tell us a theme, and the AI will suggest some games for you!", ai_modal_placeholder: "Ex: Dark fantasy, Cyberpunk, etc.", ai_modal_button: "Suggest Games", loading_text: "Translating...", download_button: "Download", category_all: "All", genre_survival: "Survival", genre_puzzle: "Puzzle", genre_music: "Music", genre_strategy: "Strategy", genre_card: "Card Game", announcements_title: "Announcements", no_announcements: "No new announcements at the moment. Stay tuned for the next updates!", announcement_testing: "This site is in a testing phase. New features and games are constantly being added. Thank you for visiting!",
+                nav_games: "Games", nav_apks: "APKs", nav_announcements: "Announcements", search_placeholder: "Search...", hero_title: "Your Universe of Discoveries", hero_subtitle: "Explore recommendations, find APKs, and dive into new adventures selected by the community.", featured_games_title: "Featured Games", all_games_title: "All Games", genre_action: "Action", genre_adventure: "Adventure", genre_action_rpg: "Action RPG", genre_rpg: "RPG", genre_roguelike: "Roguelike", genre_action_adventure: "Action-Adventure", genre_sandbox: "Sandbox", genre_metroidvania: "Metroidvania", genre_simulation: "Simulation", genre_platform: "Platform", no_results_title: "No games found", no_results_subtitle: "Try searching with other terms.", coming_soon_title: "Coming Soon", coming_soon_subtitle: "We are working on this section!", coming_soon_description: "New features and amazing games are on the way.", "404_button": "Back to Base", footer_copyright: "© 2024 GameShare. All rights reserved.", loading_text: "Translating...", download_button: "Download", category_all: "All", genre_survival: "Survival", genre_puzzle: "Puzzle", genre_music: "Music", genre_strategy: "Strategy", genre_card: "Card Game", announcements_title: "Announcements", no_announcements: "No new announcements at the moment. Stay tuned for the next updates!", announcement_testing: "This site is in a testing phase. New features and games are constantly being added. Thank you for visiting!",
             },
             pt: {
-                nav_games: "Games", nav_apks: "APKs", nav_announcements: "Anúncios", search_placeholder: "Pesquisar...", hero_title: "Seu Universo de Descobertas", hero_subtitle: "Explore recomendações, encontre APKs e mergulhe em novas aventuras selecionadas pela comunidade.", featured_games_title: "Jogos em Destaque", all_games_title: "Todos os Jogos", genre_action: "Ação", genre_adventure: "Aventura", genre_action_rpg: "RPG de Ação", genre_rpg: "RPG", genre_roguelike: "Roguelike", genre_action_adventure: "Ação-Aventura", genre_sandbox: "Sandbox", genre_metroidvania: "Metroidvania", genre_simulation: "Simulação", genre_platform: "Plataforma", no_results_title: "Nenhum jogo encontrado", no_results_subtitle: "Tente pesquisar com outros termos.", coming_soon_title: "Em Breve", coming_soon_subtitle: "Estamos a trabalhar nesta secção!", coming_soon_description: "Novas funcionalidades e jogos incríveis estão a caminho.", "404_button": "Voltar para a Base", footer_copyright: "© 2024 GameShare. Todos os direitos reservados.", ai_modal_title: "Sugestões da IA", ai_modal_subtitle: "Diga um tema e a IA irá sugerir alguns jogos para você!", ai_modal_placeholder: "Ex: Fantasia sombria, Cyberpunk, etc.", ai_modal_button: "Sugerir Jogos", loading_text: "Traduzindo...", download_button: "Baixar", category_all: "Todos", genre_survival: "Sobrevivência", genre_puzzle: "Puzzle", genre_music: "Música", genre_strategy: "Estratégia", genre_card: "Cartas", announcements_title: "Anúncios", no_announcements: "Nenhum anúncio novo no momento. Fique de olho para as próximas novidades!", announcement_testing: "Este site está em fase de testes. Novas funcionalidades e jogos são adicionados constantemente. Agradecemos a sua visita!",
+                nav_games: "Games", nav_apks: "APKs", nav_announcements: "Anúncios", search_placeholder: "Pesquisar...", hero_title: "Seu Universo de Descobertas", hero_subtitle: "Explore recomendações, encontre APKs e mergulhe em novas aventuras selecionadas pela comunidade.", featured_games_title: "Jogos em Destaque", all_games_title: "Todos os Jogos", genre_action: "Ação", genre_adventure: "Aventura", genre_action_rpg: "RPG de Ação", genre_rpg: "RPG", genre_roguelike: "Roguelike", genre_action_adventure: "Ação-Aventura", genre_sandbox: "Sandbox", genre_metroidvania: "Metroidvania", genre_simulation: "Simulação", genre_platform: "Plataforma", no_results_title: "Nenhum jogo encontrado", no_results_subtitle: "Tente pesquisar com outros termos.", coming_soon_title: "Em Breve", coming_soon_subtitle: "Estamos a trabalhar nesta secção!", coming_soon_description: "Novas funcionalidades e jogos incríveis estão a caminho.", "404_button": "Voltar para a Base", footer_copyright: "© 2024 GameShare. Todos os direitos reservados.", loading_text: "Traduzindo...", download_button: "Baixar", category_all: "Todos", genre_survival: "Sobrevivência", genre_puzzle: "Puzzle", genre_music: "Música", genre_strategy: "Estratégia", genre_card: "Cartas", announcements_title: "Anúncios", no_announcements: "Nenhum anúncio novo no momento. Fique de olho para as próximas novidades!", announcement_testing: "Este site está em fase de testes. Novas funcionalidades e jogos são adicionados constantemente. Agradecemos a sua visita!",
+            },
+            es: {
+                nav_games: "Juegos", nav_apks: "APKs", nav_announcements: "Anuncios", search_placeholder: "Buscar...", hero_title: "Tu Universo de Descubrimientos", hero_subtitle: "Explora recomendaciones, encuentra APKs y sumérgete en nuevas aventuras seleccionadas por la comunidad.", featured_games_title: "Juegos Destacados", all_games_title: "Todos los Juegos", genre_action: "Acción", genre_adventure: "Aventura", genre_action_rpg: "RPG de Acción", genre_rpg: "RPG", genre_roguelike: "Roguelike", genre_action_adventure: "Acción-Aventura", genre_sandbox: "Sandbox", genre_metroidvania: "Metroidvania", genre_simulation: "Simulación", genre_platform: "Plataforma", no_results_title: "No se encontraron juegos", no_results_subtitle: "Intenta buscar con otros términos.", coming_soon_title: "Próximamente", coming_soon_subtitle: "¡Estamos trabajando en esta sección!", coming_soon_description: "Nuevas características y juegos increíbles están en camino.", "404_button": "Volver a la Base", footer_copyright: "© 2024 GameShare. Todos los derechos reservados.", loading_text: "Traduciendo...", download_button: "Descargar", category_all: "Todos", genre_survival: "Supervivencia", genre_puzzle: "Puzzle", genre_music: "Música", genre_strategy: "Estrategia", genre_card: "Cartas", announcements_title: "Anuncios", no_announcements: "No hay anuncios nuevos por el momento. ¡Esté atento a las próximas actualizaciones!", announcement_testing: "Este sitio está en fase de pruebas. Nuevas características y juegos se añaden constantemente. ¡Gracias por su visita!",
+            },
+            ru: {
+                nav_games: "Игры", nav_apks: "APKs", nav_announcements: "Объявления", search_placeholder: "Поиск...", hero_title: "Ваша Вселенная Открытий", hero_subtitle: "Изучайте рекомендации, находите APK и погружайтесь в новые приключения, выбранные сообществом.", featured_games_title: "Рекомендуемые Игры", all_games_title: "Все Игры", genre_action: "Экшен", genre_adventure: "Приключения", genre_action_rpg: "Экшен-РПГ", genre_rpg: "РПГ", genre_roguelike: "Рогалик", genre_action_adventure: "Экшен-приключение", genre_sandbox: "Песочница", genre_metroidvania: "Метроидвания", genre_simulation: "Симулятор", genre_platform: "Платформер", no_results_title: "Игры не найдены", no_results_subtitle: "Попробуйте поискать по другим терминам.", coming_soon_title: "Скоро", coming_soon_subtitle: "Мы работаем над этим разделом!", coming_soon_description: "Новые функции и потрясающие игры уже в пути.", "404_button": "Вернуться на базу", footer_copyright: "© 2024 GameShare. Все права защищены.", loading_text: "Перевод...", download_button: "Скачать", category_all: "Все", genre_survival: "Выживание", genre_puzzle: "Головоломка", genre_music: "Музыка", genre_strategy: "Стратегия", genre_card: "Карточная игра", announcements_title: "Объявления", no_announcements: "На данный момент новых объявлений нет. Следите за обновлениями!", announcement_testing: "Этот сайт находится в стадии тестирования. Постоянно добавляются новые функции и игры. Спасибо за ваш визит!",
             }
         };
 
@@ -341,12 +311,8 @@
         const backHomeBtn = document.getElementById('backHomeBtn');
         const backHomeBtnAnnouncements = document.getElementById('backHomeBtnAnnouncements');
         const navLinks = document.querySelectorAll('.nav-link');
-        const aiModal = document.getElementById('aiModal');
-        const openAiModalBtn = document.getElementById('openAiModalBtn');
-        const closeAiModalBtn = document.getElementById('closeAiModalBtn');
         const langBtn = document.getElementById('langBtn');
         const langMenu = document.getElementById('langMenu');
-        const loadingOverlay = document.getElementById('loadingOverlay');
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
         const categoryFilterBar = document.getElementById('category-filter-bar');
@@ -356,11 +322,6 @@
         const mobileMenu = document.getElementById('mobileMenu');
         const darkModeToggle = document.getElementById('darkModeToggle');
         const htmlElement = document.documentElement;
-        const generateIdeaBtn = document.getElementById('generateIdeaBtn');
-        const gameIdeaPrompt = document.getElementById('gameIdeaPrompt');
-        const ideaResult = document.getElementById('ideaResult');
-        const loader = document.getElementById('loader');
-        const generateBtnText = document.getElementById('generateBtnText');
         
         // --- FUNÇÕES ---
         
@@ -412,50 +373,19 @@
             lucide.createIcons();
         };
 
-        async function translateWithAI(texts, targetLang) {
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const prompt = `Translate the following JSON values from Portuguese to ${targetLang}. Return a JSON object with the original keys and translated values.\n\n${JSON.stringify(texts, null, 2)}`;
-            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { responseMimeType: "application/json" } };
-            try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
-                const result = await response.json();
-                return JSON.parse(result.candidates?.[0]?.content?.parts?.[0]?.text);
-            } catch (error) {
-                console.error("Erro na tradução com IA:", error);
-                return null;
-            }
-        }
-
-        async function setLanguage(lang) {
+        const setLanguage = (lang) => {
             localStorage.setItem('language', lang);
             document.documentElement.lang = lang;
-            const applyTranslations = (langDict) => {
-                document.querySelectorAll('[data-translate-key]').forEach(el => {
-                    const key = el.getAttribute('data-translate-key');
-                    const textNode = el.querySelector('span') || Array.from(el.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
-                    if (el.placeholder) el.placeholder = langDict[key];
-                    else if (textNode) textNode.textContent = langDict[key];
-                    else el.textContent = langDict[key];
-                });
-            };
-
-            if (lang === 'pt' || lang === 'en') {
-                applyTranslations(translations[lang]);
-            } else {
-                loadingOverlay.classList.remove('hidden');
-                try {
-                    const textsToTranslate = { ...translations.pt };
-                    const translatedTexts = await translateWithAI(textsToTranslate, lang);
-                    if (translatedTexts) {
-                        applyTranslations(translatedTexts);
-                    }
-                } finally {
-                    loadingOverlay.classList.add('hidden');
-                }
-            }
-        }
+            const langTranslations = translations[lang] || translations.pt;
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                const textNode = el.querySelector('span') || Array.from(el.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
+                if (el.placeholder) el.placeholder = langTranslations[key];
+                else if (textNode) textNode.textContent = langTranslations[key];
+                else el.textContent = langTranslations[key];
+            });
+            generateCategoryFilters(); // Atualiza as categorias traduzidas
+        };
 
         const showPage = (pageId) => {
             mainContent.classList.add('hidden');
@@ -470,13 +400,11 @@
             showPage('mainContent');
         };
 
-        const toggleAiModal = (show) => aiModal.classList.toggle('hidden', !show);
-
         const updateFilters = () => {
             const searchTerm = searchInput.value.toLowerCase();
             const activeCategory = document.querySelector('.category-filter.active')?.dataset.category;
             let visibleGames = 0;
-            document.querySelectorAll('.game-card').forEach(card => {
+            document.querySelectorAll('#all-games-grid .game-card, #featured-games-grid .game-card').forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 const categories = card.dataset.categories.split(',');
                 const searchMatch = title.includes(searchTerm);
@@ -533,52 +461,28 @@
             updateIcon(isDark);
         };
 
-        const callGeminiApiForGames = async (prompt) => {
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const fullPrompt = `Aja como um especialista em recomendação de jogos. Baseado no tema a seguir, sugira uma lista de 5 nomes de jogos (reais ou fictícios) que se encaixem nesse tema. Retorne apenas os nomes dos jogos, um por linha. Tema: "${prompt}"`;
-            const payload = { contents: [{ role: "user", parts: [{ text: fullPrompt }] }] };
-            try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
-                const result = await response.json();
-                return result.candidates?.[0]?.content?.parts?.[0]?.text || "Não foi possível gerar sugestões.";
-            } catch (error) {
-                console.error("Erro ao chamar a API Gemini:", error);
-                return "Ocorreu um erro ao tentar buscar as sugestões.";
-            }
-        };
-
-        // --- EVENT LISTENERS ---
+        // --- EVENT LISTENERS E INICIALIZAÇÃO ---
         homeLink.addEventListener('click', goHome);
         backHomeBtn.addEventListener('click', goHome);
         backHomeBtnAnnouncements.addEventListener('click', goHome);
-        navLinks.forEach(link => link.addEventListener('click', (e) => showPage(e.currentTarget.dataset.page)));
-        openAiModalBtn.addEventListener('click', () => toggleAiModal(true));
-        closeAiModalBtn.addEventListener('click', () => toggleAiModal(false));
-        aiModal.querySelector('.modal-backdrop').addEventListener('click', () => toggleAiModal(false));
+        navLinks.forEach(link => link.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage(e.currentTarget.dataset.page);
+        }));
         if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         if (searchBtn) searchBtn.addEventListener('click', () => { searchInput.classList.toggle('active'); searchInput.focus(); });
         if (searchInput) searchInput.addEventListener('input', updateFilters);
         if (darkModeToggle) darkModeToggle.addEventListener('click', () => setDarkMode(!htmlElement.classList.contains('dark')));
-        if (generateIdeaBtn) generateIdeaBtn.addEventListener('click', async () => {
-            const prompt = gameIdeaPrompt.value.trim();
-            const currentLang = localStorage.getItem('language') || 'pt';
-            const errorKey = "ai_modal_placeholder_error";
-            translations.pt[errorKey] = "Por favor, insira um tema para obter sugestões.";
-            translations.en[errorKey] = "Please enter a theme to get suggestions.";
-            if (!prompt) { ideaResult.textContent = translations[currentLang]?.[errorKey] || translations.pt[errorKey]; return; }
-            loader.classList.remove('hidden');
-            generateBtnText.style.display = 'none';
-            generateIdeaBtn.disabled = true;
-            ideaResult.textContent = "";
-            ideaResult.textContent = await callGeminiApiForGames(prompt);
-            loader.classList.add('hidden');
-            generateBtnText.style.display = 'inline';
-            generateIdeaBtn.disabled = false;
+        langBtn.addEventListener('click', () => langMenu.classList.toggle('hidden'));
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = e.currentTarget.getAttribute('data-lang');
+                setLanguage(lang);
+                langMenu.classList.add('hidden');
+            });
         });
 
-        // --- INICIALIZAÇÃO DA PÁGINA ---
         document.addEventListener('DOMContentLoaded', () => {
             renderGames();
             const savedTheme = localStorage.getItem('darkMode');
